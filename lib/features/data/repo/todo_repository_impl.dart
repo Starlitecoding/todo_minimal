@@ -1,42 +1,47 @@
+import 'package:todo_test1/features/data/datasources/local_todo_datasouce.dart';
 import 'package:todo_test1/features/data/model/todo_hive_model.dart';
 import 'package:todo_test1/features/domain/model/todo_entity.dart';
 import 'package:todo_test1/features/domain/repo/todo_repository.dart';
 
-class TodoRepositoryImpl implements TodoRepository{
+class TodoRepositoryImpl implements TodoRepository {
+  final LocalTodoDatasouce localTodoDatasouce;
+
+  TodoRepositoryImpl(this.localTodoDatasouce);
 
   //data -> domain
-  // TodoEntity fromHiveModelToEntity(TodoHiveModel model){
-  //   return TodoEntity(id: model.id, text: model.text, isDone: model.isDone);
-
-  // }
-
+  TodoEntity fromModelToEntity(TodoHiveModel model) {
+    return TodoEntity(id: model.id, text: model.text, isDone: model.isDone);
+  }
 
   //data <- domain
-
-
-
-
-  @override
-  Future<void> createTodo(TodoEntity todoEntity) {
-    // TODO: implement createTodo
-    throw UnimplementedError();
+  TodoHiveModel fromEntityToModel(TodoEntity entity) {
+    return TodoHiveModel(
+      id: entity.id,
+      text: entity.text,
+      isDone: entity.isDone,
+    );
   }
 
   @override
-  Future<void> deleteTodo(String id) {
-    // TODO: implement deleteTodo
-    throw UnimplementedError();
+  Future<List<TodoEntity>> getAllTodos() async {
+    final models = await localTodoDatasouce.getAllTodos();
+    return models.map(fromModelToEntity).toList();
   }
 
   @override
-  Future<List<TodoEntity>> getAllTodos() {
-    // TODO: implement getAllTodos
-    throw UnimplementedError();
+  Future<void> createTodo(TodoEntity todoEntity) async {
+    final model = fromEntityToModel(todoEntity);
+    await localTodoDatasouce.createTodo(model);
   }
 
   @override
-  Future<void> updateTodo(TodoEntity todoEntity) {
-    // TODO: implement updateTodo
-    throw UnimplementedError();
+  Future<void> updateTodo(TodoEntity todoEntity) async {
+    final model = fromEntityToModel(todoEntity); 
+    await localTodoDatasouce.updateTodo(model);
+  }
+
+  @override
+  Future<void> deleteTodo(String id) async {
+    await localTodoDatasouce.deleteTodo(id);
   }
 }

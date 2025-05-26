@@ -1,4 +1,4 @@
-abstract class TodoEntity {
+class TodoEntity {
   final int id;
   final String text;
   final bool isDone;
