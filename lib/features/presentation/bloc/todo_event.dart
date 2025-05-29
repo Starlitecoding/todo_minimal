@@ -1,7 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_test1/features/domain/model/todo_entity.dart';
 
 
