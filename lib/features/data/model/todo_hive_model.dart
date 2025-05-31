@@ -7,7 +7,7 @@ part 'todo_hive_model.g.dart';
 class TodoHiveModel extends HiveObject{
 
 @HiveField(1)
-int id;
+String id;
 
 @HiveField(2)
 String text;

@@ -17,7 +17,7 @@ class TodoHiveModelAdapter extends TypeAdapter<TodoHiveModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TodoHiveModel(
-      id: fields[1] as int,
+      id: fields[1] as String,
       text: fields[2] as String,
       isDone: fields[3] as bool,
     );

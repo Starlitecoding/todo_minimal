@@ -10,7 +10,7 @@ class TodoRepositoryImpl implements TodoRepository {
 
   //data -> domain
   TodoEntity fromModelToEntity(TodoHiveModel model) {
-    return TodoEntity(id: model.id, text: model.text, isDone: model.isDone);
+    return TodoEntity(id: model.id.toString(), text: model.text, isDone: model.isDone);
   }
 
   //data <- domain
