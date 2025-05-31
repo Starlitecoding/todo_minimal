@@ -1,7 +1,3 @@
-import 'package:equatable/equatable.dart';
-import 'package:todo_test1/features/domain/model/todo_entity.dart';
-
-
 part of 'todo_bloc.dart';
 
 abstract class TodoEvent extends Equatable{

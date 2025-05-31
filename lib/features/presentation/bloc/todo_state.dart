@@ -1,7 +1,3 @@
-import 'package:equatable/equatable.dart';
-import 'package:todo_test1/features/domain/model/todo_entity.dart';
-
-
 part of 'todo_bloc.dart';
 
 abstract class TodoState extends Equatable{
@@ -24,13 +20,13 @@ class TodoLoading extends TodoState{
 }
 
 class TodoLoaded extends TodoState{
-  final TodoEntity todo;
+  final List<TodoEntity> todoList;
 
-  const TodoLoaded(this.todo);
+  const TodoLoaded(this.todoList);
 
 
   @override
-  List<Object?> get props => [todo];
+  List<Object?> get props => [todoList];
   
 }
 
