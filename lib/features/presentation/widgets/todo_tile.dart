@@ -1,42 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:todo_test1/features/domain/model/todo_entity.dart';
 
 class TodoTile extends StatelessWidget {
-  final String text; // текст задачи
-  final bool isDone; // выполнена ли задача
-  final Function(bool?) onChanged; // функция, когда меняем чекбокс
+  final TodoEntity todo;
 
-  const TodoTile({
-    super.key,
-    required this.text,
-    required this.isDone,
-    required this.onChanged,
-  });
+  const TodoTile({super.key, required this.todo});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: Row(
-        children: [
-          // ✅ Чекбокс
-          Checkbox(
-            value: isDone,
-            onChanged: onChanged,
-            activeColor: Colors.white,
-            checkColor: Colors.black,
-          ),
-
-          // 📝 Текст задачи
-          Text(
-            text,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              decoration:
-                  isDone ? TextDecoration.lineThrough : TextDecoration.none,
-            ),
-          ),
-        ],
+    return ListTile(
+      title: Text(todo.text),
+      leading: Icon(
+        todo.isDone ? Icons.check_circle : Icons.radio_button_unchecked,
+        color: todo.isDone ? Colors.green : Colors.grey,
       ),
     );
   }
