@@ -1,14 +1,13 @@
-
 import 'package:hive/hive.dart';
 import 'package:todo_test1/features/data/datasources/local_todo_datasouce.dart';
 import 'package:todo_test1/features/data/model/todo_hive_model.dart';
 
-class LocalTodoDatasouceImpl implements LocalTodoDatasouce{
-  final Box <TodoHiveModel> todoBox;
+class LocalTodoDatasouceImpl implements LocalTodoDatasouce {
+  final Box<TodoHiveModel> todoBox;
 
   LocalTodoDatasouceImpl(this.todoBox);
 
-@override
+  @override
   Future<List<TodoHiveModel>> getAllTodos() async {
     return todoBox.values.toList();
   }
@@ -23,11 +22,8 @@ class LocalTodoDatasouceImpl implements LocalTodoDatasouce{
     await todoBox.delete(id);
   }
 
-
   @override
   Future<void> updateTodo(TodoHiveModel todo) async {
-   await todo.save();
+    await todoBox.put(todo.id, todo);
   }
-
-
 }

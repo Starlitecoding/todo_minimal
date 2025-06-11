@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_test1/features/domain/model/todo_entity.dart';
-import 'package:todo_test1/features/domain/usecases/add_todo_usecase.dart';
 import 'package:todo_test1/features/presentation/bloc/todo_bloc.dart';
 import 'package:todo_test1/features/presentation/widgets/empty_state.dart';
 import 'package:todo_test1/features/presentation/widgets/todo_list.dart';
@@ -9,6 +8,7 @@ import '../widgets/todo_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    // 👇 это и есть триггер загрузки
+  
     context.read<TodoBloc>().add(LoadTodos());
   }
 
@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> {
           );
 
           context.read<TodoBloc>().add(CreateTodo(todo));
+          
         },
         child: Icon(Icons.add),
       ),

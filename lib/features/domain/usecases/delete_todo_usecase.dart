@@ -5,7 +5,7 @@ class DeleteTodoUsecase {
 
   DeleteTodoUsecase(this.repository);
 
-  Future<void> call(int id){
+  Future<void> call(String id){
     return repository.deleteTodo(id);
   }
 

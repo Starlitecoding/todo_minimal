@@ -31,7 +31,7 @@ class CreateTodo extends TodoEvent{
 
 
 class DeleteTodo extends TodoEvent{
-  final int id;
+  final String id;
 
   const DeleteTodo(this.id);
 
