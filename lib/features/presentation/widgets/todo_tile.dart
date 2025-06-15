@@ -15,6 +15,7 @@ class TodoTile extends StatefulWidget {
 class _TodoTileState extends State<TodoTile> {
   late bool isEditing;
   late TextEditingController controller;
+  late FocusNode _focusNode;
 
   @override
   void initState() {
@@ -22,12 +23,32 @@ class _TodoTileState extends State<TodoTile> {
     isEditing =
         widget.todo.text.isEmpty; // если текст пустой — это новая тудушка
     controller = TextEditingController(text: widget.todo.text);
+
+    _focusNode = FocusNode();
+
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus && isEditing) {
+        _finishEditing();
+      }
+    });
+  }
+
+  void _finishEditing() {
+    final value = controller.text.trim();
+    if (value.isNotEmpty && value != widget.todo.text) {
+      final updatedTodo = widget.todo.copyWith(text: value);
+      context.read<TodoBloc>().add(UpdateTodo(updatedTodo));
+    }
+    setState(() {
+      isEditing = false;
+    });
   }
 
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
+    _focusNode.dispose;
   }
 
   @override
@@ -50,24 +71,27 @@ class _TodoTileState extends State<TodoTile> {
         title:
             isEditing
                 ? TextField(
+                  focusNode: _focusNode,
                   controller: controller,
                   autofocus: true,
-                  onSubmitted: (value) {
-                    if (value.trim().isNotEmpty) {
-                      final updatedTodo = widget.todo.copyWith(
-                        text: value.trim(),
-                      );
-                      context.read<TodoBloc>().add(UpdateTodo(updatedTodo));
-                    }
-                    setState(() {
-                      isEditing = false;
-                    });
-                  },
-                  onEditingComplete: () {
-                    setState(() {
-                      isEditing = false;
-                    });
-                  },
+                  onSubmitted: (value) => _finishEditing(),
+
+                  // onSubmitted: (value) {
+                  //   if (value.trim().isNotEmpty) {
+                  //     final updatedTodo = widget.todo.copyWith(
+                  //       text: value.trim(),
+                  //     );
+                  //     context.read<TodoBloc>().add(UpdateTodo(updatedTodo));
+                  //   }
+                  //   setState(() {
+                  //     isEditing = false;
+                  //   });
+                  // },
+                  // onEditingComplete: () {
+                  //   setState(() {
+                  //     isEditing = false;
+                  //   });
+                  // },
                   style: const TextStyle(color: Colors.white),
                   cursorColor: Colors.white,
                 )
@@ -76,6 +100,7 @@ class _TodoTileState extends State<TodoTile> {
                   style: TextStyle(
                     decoration:
                         widget.todo.isDone ? TextDecoration.lineThrough : null,
+                        decorationColor: Colors.white,
                     color: Colors.white,
                   ),
                 ),
