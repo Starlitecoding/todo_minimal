@@ -104,7 +104,7 @@ class _TodoTileState extends State<TodoTile> {
                     color: Colors.white,
                   ),
                 ),
-        leading: Icon(
+        leading: Icon( 
           widget.todo.isDone
               ? Icons.check_circle
               : Icons.radio_button_unchecked,
